@@ -64,7 +64,7 @@ function sendUsers(){
     io.emit('users', usersData);
 }
 function switchPlayer(){
-    timeout = setTimeout(switchPlayer, 15000);
+    timeout = setTimeout(switchPlayer, 45000);
     const indexCurrentPlayer = users.indexOf(currentPlayer);
     currentPlayer = users[(indexCurrentPlayer + 1) % users.length];
 
