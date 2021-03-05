@@ -5,8 +5,76 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Draw Something</title>
+    <style>
+        canvas{
+            border: 1px solid black;
+        }
+        li.is-active{
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
     <h1>Hello World</h1>
+
+    <ul class="users"></ul>
+
+    <script  src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.2.0/p5.min.js" integrity="sha512-b/htz6gIyFi3dwSoZ0Uv3cuv3Ony7EeKkacgrcVg8CMzu90n777qveu0PBcbZUA7TzyENGtU+qZRuFAkfqgyoQ==" crossorigin="anonymous"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        const username = prompt("What is your name?");
+
+        socket.emit('username', username);
+
+        let canDraw = false;
+
+        const usersList = document.querySelector('.users');
+        socket.on('users', (data)=>{
+            usersList.innerHTML = '';
+            data.forEach((user)=>{
+                const li = document.createElement('li');
+                li.innerHTML = user.username;
+                if(user.isActive){
+                    li.classList.add('is-active');
+                }
+
+                usersList.appendChild(li);
+
+                if(user.username === username){
+                    canDraw = user.isActive;
+                }
+            });
+        });
+
+
+        function setup(){
+            createCanvas(500, 500);
+        }
+
+        function mouseDragged(){
+            if(!canDraw) return;
+            line(mouseX,mouseY,pmouseX, pmouseY);
+
+            socket.emit('line', {
+                mouseX,
+                mouseY,
+                pmouseX,
+                pmouseY
+            });
+        }
+
+        socket.on('line', (data)=>{
+            line(data.mouseX,data.mouseY,data.pmouseX,data.pmouseY )
+        });
+
+        socket.on('word', (nextWord) =>{
+            alert(`You have to draw: ${nextWord}` );
+
+        });
+        socket.on('clear', ()=>{
+            clear();
+        });
+    </script>
 </body>
 </html>

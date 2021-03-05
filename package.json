@@ -1,0 +1,23 @@
+{
+  "name": "draw2021-nathan-noel",
+  "version": "0.0.1",
+  "description": "Exercice for scholl",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NathanN-dev/Draw2021-Nathan-Noel.git"
+  },
+  "author": "Nathan Noël",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NathanN-dev/Draw2021-Nathan-Noel/issues"
+  },
+  "homepage": "https://github.com/NathanN-dev/Draw2021-Nathan-Noel#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^3.1.2"
+  }
+}
